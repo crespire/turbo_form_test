@@ -1,0 +1,34 @@
+<%= turbo_frame_tag "post_form" do %>
+  <%= link_to "Update form", update_form_path(id: 2), data: { turbo_stream: true } %>
+  <%= local_assigns %>
+  <% if local_assigns.has_key?(:updated) %>
+    We updated from streams
+  <% end %>
+  <%= form_with(model: post) do |form| %>
+    <% if post.errors.any? %>
+      <div style="color: red">
+        <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+        <ul>
+          <% post.errors.each do |error| %>
+            <li><%= error.full_message %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div>
+      <%= form.label :title, style: "display: block" %>
+      <%= form.text_field :title %>
+    </div>
+
+    <div>
+      <%= form.label :body, style: "display: block" %>
+      <%= form.text_area :body %>
+    </div>
+
+    <div>
+      <%= form.submit %>
+    </div>
+  <% end %>
+<% end %>
